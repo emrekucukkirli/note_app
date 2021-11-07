@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         primaryColor: Colors.white,
-        accentColor: Colors.purple,
       ),
       home: LoginPage(),
     );
