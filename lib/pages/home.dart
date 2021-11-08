@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:note_app/pages/add_note.dart';
+import 'package:note_app/pages/view_note.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -60,30 +61,41 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 DocumentSnapshot Map = snapshot.data!.docs[index];
                 DateTime noteDateTime = Map['created'].toDate();
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${Map['title']}",
-                          style: TextStyle(
-                            fontSize: 24,
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Text(
-                              DateFormat.yMMMd().add_jm().format(noteDateTime),
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.white38),
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ViewNote(),
+                      ),
+                    );
+                  },
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${Map['title']}",
+                            style: TextStyle(
+                              fontSize: 24,
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Text(
+                                DateFormat.yMMMd()
+                                    .add_jm()
+                                    .format(noteDateTime),
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white38),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
