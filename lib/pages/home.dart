@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -59,13 +57,21 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                DocumentSnapshot Map = snapshot.data!.docs[index];
-                DateTime noteDateTime = Map['created'].toDate();
+                // DocumentSnapshot Map = snapshot.data!.docs[index];
+                Map data = snapshot.data!.docs[index] as Map;
+                DateTime noteDateTime = data['created'].toDate();
+                String formattedTime =
+                    DateFormat.yMMMd().add_jm().format(noteDateTime);
+
                 return InkWell(
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ViewNote(),
+                        builder: (context) => ViewNote(
+                          data,
+                          formattedTime,
+                          snapshot.data!.docs[index].reference,
+                        ),
                       ),
                     );
                   },
@@ -76,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${Map['title']}",
+                            "${data['title']}",
                             style: TextStyle(
                               fontSize: 24,
                             ),
@@ -86,9 +92,7 @@ class _HomePageState extends State<HomePage> {
                             child: Padding(
                               padding: const EdgeInsets.only(top: 10),
                               child: Text(
-                                DateFormat.yMMMd()
-                                    .add_jm()
-                                    .format(noteDateTime),
+                                formattedTime,
                                 style: TextStyle(
                                     fontSize: 16, color: Colors.white38),
                               ),

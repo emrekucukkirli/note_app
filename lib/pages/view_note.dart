@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ViewNote extends StatefulWidget {
-  const ViewNote({Key? key}) : super(key: key);
+  final Map data;
+  final String time;
+  final DocumentReference ref;
+
+  ViewNote(this.data, this.time, this.ref);
 
   @override
   _ViewNoteState createState() => _ViewNoteState();
